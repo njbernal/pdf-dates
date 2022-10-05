@@ -1,3 +1,8 @@
+"""
+    Create initial bare server and ensure docker works.
+    Deploy to GCP and test in the cloud.
+"""
+
 import os
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
