@@ -8,13 +8,27 @@ export default {
     components: {
         FullCalendar
     },
+    props: {
+        'dates': {
+            type: Array,
+            required: true
+        }
+    },
     data() {
         return {
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin],
-                initialView: 'dayGridMonth'
+                initialView: 'dayGridMonth',
+                dateClick: this.handleDateClick,
+                //events: [{ title: 'event 1', date: '2022-10-08' },]
+                events: this.dates
             }
         }
+    },
+    methods: {
+        handleDateClick: function (arg) {
+            alert('click ' + arg.dateStr)
+        },
     }
 }
 </script>

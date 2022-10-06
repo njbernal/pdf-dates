@@ -2,16 +2,39 @@
 import FileManager from "./components/FileManager.vue";
 import TheCalendar from "./components/TheCalendar.vue";
 </script>
+
+<script>
+export default {
+  data() {
+    return {
+      events: []
+    }
+  },
+  methods: {
+    updateCalendar(data) {
+      const new_events = []
+      for (let file in data) {
+        for (let line of data[file].results) {
+          for (let date_item of line) {
+            new_events.push({ date: new Date(date_item[0]).toISOString().split('T')[0], title: date_item[1] })
+          }
+        }
+      }
+      this.events = new_events;
+    }
+  }
+}
+</script>
   
 <template>
   <header>
     <div class="wrapper">
-      <FileManager />
+      <FileManager @add-to-calendar="updateCalendar" />
     </div>
   </header>
 
   <main>
-    <TheCalendar />
+    <TheCalendar :dates="events" />
   </main>
 </template>
   

@@ -4,8 +4,11 @@ import axios from 'axios'
 export default {
     name: "FileManager",
     props: {},
+    emits: ['add-to-calendar'],
     data() {
-        current_files = []
+        return {
+            current_files: []
+        }
     },
     methods: {
         onPickFile() {
@@ -24,6 +27,11 @@ export default {
                     "Content-Type": "multipart/form-data",
                 }
             });
+
+            for (let key in result.data) {
+                this.current_files.push(key)
+            }
+            this.$emit('add-to-calendar', result.data)
             return result
         },
     }
@@ -33,11 +41,13 @@ export default {
 <template>
     <div class="filemanager-container">
         <button class="" @click="onPickFile">Upload PDFs</button>
-        <input type="file" style="display: none" multiple="multiple" ref="fileInput" accept="application/pdf" @change="onFilePicked" />
+        <input ref="fileInput" type="file" style="display: none" multiple="multiple" accept="application/pdf" @change="onFilePicked" />
 
         <h1 class="green">Uploaded PDFs</h1>
-        <div class="file-container">
-            File list will go here.
+        <div id="file_list" class="file-container">
+            <ul v-if="current_files.length">
+                <li v-for="(filename, index) in current_files" :key="index">{{filename}}</li>
+            </ul>
         </div>
     </div>
 </template>
