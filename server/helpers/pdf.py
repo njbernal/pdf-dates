@@ -28,7 +28,8 @@ def find_dates(contents):
         for line in page:
             try:
                 dates = parse(line, tzinfos={'FOX': tzutc()}, fuzzy=True)
-                page_results.append((dates.date(), line))
+                date_str = str(dates.date())
+                page_results.append((date_str, line))
             except ParserError:
                 pass
 
