@@ -3,11 +3,17 @@ import axios from 'axios'
 
 export default {
     name: "FileManager",
-    props: {},
-    emits: ['add-to-calendar'],
+    props: {
+        dates: {
+            type: Object,
+            required: true
+        }
+    },
     data() {
         return {
-            current_files: []
+            current_files: this.dates,
+            uuid: localStorage.getItem('pdfCalendarId'),
+            visibility: ['fas', 'eye']
         }
     },
     methods: {
@@ -15,24 +21,22 @@ export default {
             this.$refs.fileInput.click()
         },
         async onFilePicked(event) {
-
             const files = event.target.files
             const formData = new FormData()
             for (let file of files) {
                 formData.append('source', file)
             }
 
-            const result = await axios.post("http://localhost:5000/api/upload", formData, {
+            formData.append('user', this.uuid)
+
+            return await axios.post("http://localhost:5000/api/upload", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 }
             });
-
-            for (let key in result.data) {
-                this.current_files.push(key)
-            }
-            this.$emit('add-to-calendar', result.data)
-            return result
+        },
+        toggleVisible() {
+            this.visibility[1] === 'eye' ? this.visibility[1] = 'eye-slash' : this.visibility[1] = 'eye'
         },
     }
 }
@@ -45,9 +49,20 @@ export default {
 
         <h1 class="green">Uploaded PDFs</h1>
         <div id="file_list" class="file-container">
-            <ul v-if="current_files.length">
-                <li v-for="(filename, index) in current_files" :key="index">{{filename}}</li>
-            </ul>
+            <div v-for="(filename, index) in Object.keys(dates)" :key="index" class="file-container">
+                <div class="file-title">
+                    <h3>{{filename}}</h3>
+                    <div class="file-icons">
+                        <font-awesome-icon :icon="visibility" @click="toggleVisible" />
+                        <font-awesome-icon :icon="['fas','circle-xmark']" />
+                    </div>
+                </div>
+                <div class="file-data">
+                    <ul v-for="(page, page_number) in dates[filename].results" :key="page_number">
+                        <li v-for="(item, item_index) in dates[filename].results[page_number]" :key="item_index">{{item}}</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -63,6 +78,14 @@ h3 {
     font-size: 1.2rem;
 }
 
+.file-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.svg-inline--fa {
+    margin: 0 5px 0 0;
+}
 
 @media (min-width: 1024px) {}
 </style>

@@ -1,38 +1,80 @@
 <script>
-import "@fullcalendar/core/vdom";
-import FullCalendar from "@fullcalendar/vue3"
-import dayGridPlugin from "@fullcalendar/daygrid"
-import interactionPlugin from "@fullcalendar/interaction"
+import Calendar from '@toast-ui/calendar'
+import '@toast-ui/calendar/dist/toastui-calendar.min.css'
 
 export default {
-    components: {
-        FullCalendar
-    },
     props: {
         'dates': {
-            type: Array,
+            type: Object,
             required: true
         }
     },
     data() {
         return {
-            calendarOptions: {
-                plugins: [dayGridPlugin, interactionPlugin],
-                initialView: 'dayGridMonth',
-                dateClick: this.handleDateClick,
-                //events: [{ title: 'event 1', date: '2022-10-08' },]
-                events: this.dates
-            }
+            calendar: '',
         }
     },
+    watch: {
+        dates() {
+            this.updateCalendar()
+        }
+    },
+    mounted() {
+        this.createCalendar()
+    },
     methods: {
-        handleDateClick: function (arg) {
-            alert('click ' + arg.dateStr)
+        createCalendar: function () {
+            this.calendar = new Calendar('#calendar', {
+                defaultView: 'month',
+                template: {
+                    // allday(event) {
+                    //     return `<span style="">${event.title}</span>`;
+                    // },
+                },
+            });
+            this.updateCalendar();
         },
-    }
+        updateCalendar: function () {
+            const keys = Object.keys(this.dates)
+            const cals = []
+            for (let filename of keys) {
+                cals.push({
+                    id: filename,
+                    name: filename,
+                    backgroundColor: '#' + Math.floor(Math.random() * 16777215).toString(16),
+                });
+
+                const dates = this.dates[filename].results
+                const events = []
+                for (let page in dates) {
+                    for (let index in dates[page]) {
+                        let obj = {
+                            id: index,
+                            calendarId: filename,
+                            title: dates[page][index][1],
+                            category: 'allday',
+                            start: dates[page][index][0],
+                            end: dates[page][index][0]
+                        }
+                        events.push(obj)
+                    }
+                }
+                this.calendar.createEvents(events)
+            }
+            this.calendar.setCalendars(cals)
+        }
+    },
 }
 </script>
     
 <template>
-    <FullCalendar :options="calendarOptions" />
+    <!-- <FullCalendar :options="calendarOptions" /> -->
+    <div id="calendar"></div>
 </template>
+
+<style scoped>
+#calendar {
+    height: 600px;
+    width: 600px;
+}
+</style>

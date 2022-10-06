@@ -1,40 +1,42 @@
 <script setup>
+import axios from 'axios';
+import { ref, onMounted } from 'vue'
+
 import FileManager from "./components/FileManager.vue";
 import TheCalendar from "./components/TheCalendar.vue";
-</script>
 
-<script>
-export default {
-  data() {
-    return {
-      events: []
-    }
-  },
-  methods: {
-    updateCalendar(data) {
-      const new_events = []
-      for (let file in data) {
-        for (let line of data[file].results) {
-          for (let date_item of line) {
-            new_events.push({ date: new Date(date_item[0]).toISOString().split('T')[0], title: date_item[1] })
-          }
-        }
-      }
-      this.events = new_events;
-    }
+const uuid = ref(localStorage.getItem('pdfCalendarId'))
+const dateData = ref([])
+
+onMounted(() => {
+  if (localStorage.getItem('pdfCalendarId')) {
+    uuid.value = localStorage.getItem('pdfCalendarId')
   }
+  else {
+    axios.get('http://localhost:5000/api/user').then(res => {
+      localStorage.setItem('pdfCalendarId', res.data)
+    })
+  }
+})
+
+async function get_files() {
+  axios.post("http://localhost:5000/api/files", { user: uuid.value }).then(result => {
+    dateData.value = { ...dateData.value, ...result.data }
+  });
 }
+get_files()
+
 </script>
   
 <template>
   <header>
     <div class="wrapper">
-      <FileManager @add-to-calendar="updateCalendar" />
+      <FileManager :dates="dateData" />
     </div>
   </header>
 
   <main>
-    <TheCalendar :dates="events" />
+    <TheCalendar :dates="dateData" />
   </main>
 </template>
   
@@ -53,10 +55,6 @@ header {
     display: flex;
     place-items: center;
     padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
   }
 
   header .wrapper {
