@@ -1,13 +1,20 @@
+<script setup>
+import FileManager from "./components/FileManager.vue";
+import TheCalendar from "./components/TheCalendar.vue";
+</script>
+  
 <template>
   <header>
-    Left Side
+    <div class="wrapper">
+      <FileManager />
+    </div>
   </header>
 
   <main>
-    Right Side
+    <TheCalendar />
   </main>
 </template>
-
+  
 <style scoped>
 header {
   line-height: 1.5;
@@ -36,3 +43,4 @@ header {
   }
 }
 </style>
+  
