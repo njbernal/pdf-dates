@@ -1,7 +1,13 @@
+import re
 from dateutil.parser import parse, ParserError
-from dateutil.tz import tzutc
 from PyPDF2 import PdfReader
 from PyPDF2.errors import EmptyFileError
+
+
+formats = [
+    '\d+[\/-]\d+[\/-]\d{2}(?:\d{2})?',
+    '\d{1}(?:\d{1})\s[a-zA-Z]{3}(?:[a-zA-Z]*)\s\d{2}(?:\d{2})'
+]
 
 
 class ReadError(Exception):
@@ -17,27 +23,36 @@ def read_file(current_pdf):
 
     pages = []
     for page in reader.pages:
-        pages.append(page.extractText().split('\n'))
-    return pages
+        pages.append(page.extractText())
+
+    text = ''.join(pages)
+    return text
 
 
 def find_dates(contents):
-    file_results, count = [], 0
-    for page in contents:
-        page_results = []
-        for line in page:
+    matches = []
+    count = 0
+    for format in formats:
+        # matches += re.findall(format, text)
+        m = re.finditer(format, contents)
+        for obj in m:
             try:
-                dates = parse(line, tzinfos={'FOX': tzutc()}, fuzzy=True)
-                date_str = str(dates.date())
-                page_results.append((date_str, line))
-            except ParserError:
-                pass
-
-        # Increase date count and append results to file_results
-        count += len(page_results)
-        file_results.append(page_results)
-
-    return {"count": count, "results": file_results, "error": False}
+                current = str(parse(obj.group()).date())
+            except:
+                continue
+            start, end = obj.span()
+            extra_chars = 30
+            blurb = contents[max(start - extra_chars, 0):min(end + extra_chars, len(contents))]
+            blurb = blurb.replace(u'\xa0', u' ')
+            blurb = "..." + blurb.replace('\n', ' ') + "..."
+            date = {
+                "date": current,
+                "span": obj.span(),
+                "blurb": blurb
+            }
+            matches.append(date)
+        print(matches)
+    return {"count": len(matches), "results": matches, "error": False}
 
 
 def parsePDF(file):
