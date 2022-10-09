@@ -2,7 +2,7 @@ from flask import Flask, request, make_response
 from flask_cors import CORS, cross_origin
 
 # PDF Date Extractor processing functionality
-from helpers.pdf import parsePDF
+from helpers.pdf import DateExtractor
 
 # Create server and add cors support
 app = Flask(__name__)
@@ -32,7 +32,9 @@ def upload() -> object:
 
     result = {}
     for file in request.files.getlist("source"):
-        result[file.filename] = parsePDF(file)
+        # result[file.filename] = parsePDF(file)
+        extractor = DateExtractor(file)
+        result[file.filename] = extractor.get_results()
     return result
 
 

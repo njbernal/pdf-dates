@@ -1,0 +1,18 @@
+{
+  "name": "pdf-dates",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deployClient": "cd client && docker build -t pdf-dates-client . && docker tag pdf-dates-client njbernal/pdf-dates-client && docker tag njbernal/pdf-dates-client gcr.io/portfolio-364703/pdf-dates-client && docker push gcr.io/portfolio-364703/pdf-dates-client && gcloud run deploy pdf-dates-client --region us-west1 --image gcr.io/portfolio-364703/pdf-dates-client",
+    "deployServer": "cd server && docker build -t pdf-dates-server . && docker tag pdf-dates-server njbernal/pdf-dates-server && docker push njbernal/pdf-dates-server && docker pull njbernal/pdf-dates-server && docker tag njbernal/pdf-dates-server gcr.io/portfolio-364703/pdf-dates-server && docker push gcr.io/portfolio-364703/pdf-dates-server && gcloud run deploy pdf-dates-server --region us-west1 --image gcr.io/portfolio-364703/pdf-dates-server",
+    "deploy": "npm run deployClient && npm run deployServer"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com./njbernal/pdf-dates"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
