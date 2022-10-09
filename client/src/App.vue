@@ -1,30 +1,18 @@
 <script setup>
-import axios from 'axios';
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 import FileManager from "./components/FileManager.vue";
 import TheCalendar from "./components/TheCalendar.vue";
 import ThePopup from "./components/ThePopup.vue";
 
-const uuid = ref(localStorage.getItem('pdfCalendarId'))
 const dateData = ref({})
 const startDate = ref('2022-10-08')
 const calendarColors = ref([])
 const popupData = ref([])
 const popupStatus = ref(false)
 const files = ref({})
-const colors = ['#5B9DDA55', '#DAA55B55', '#9D5BFA55', '#7CDA5B55', '#5B60DA55', '#DA5B5B55', '#D0DA5B55', '#C15BDA55']
+const colors = ['#5B9DDA33', '#DAA55B33', '#9D5BFA33', '#7CDA5B33', '#5B60DA33', '#DA5B5B33', '#D0DA5B33', '#C15BDA33']
 
-onMounted(() => {
-  if (localStorage.getItem('pdfCalendarId')) {
-    uuid.value = localStorage.getItem('pdfCalendarId')
-  }
-  else {
-    axios.get(`${import.meta.env.VITE_SERVER}/api/user`).then(res => {
-      localStorage.setItem('pdfCalendarId', res.data)
-    })
-  }
-})
 
 function setCalendarDate(date) {
   startDate.value = date

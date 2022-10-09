@@ -15,7 +15,7 @@ export default {
         colors: {
             type: Object,
             required: true
-        }
+        },
     },
     emits: ['set-calendar-date', 'cache-files', 'add-dates-to-calendar'],
     data() {
@@ -31,13 +31,11 @@ export default {
         },
         async onFilePicked(event) {
             const files = event.target.files;
-
             const formData = new FormData()
             for (let file of files) {
                 formData.append('source', file)
             }
 
-            formData.append('user', this.uuid)
             this.$emit('cache-files', files);
             const result = await axios.post(`${import.meta.env.VITE_SERVER}/api/upload`, formData, {
                 headers: {

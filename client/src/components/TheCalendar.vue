@@ -65,6 +65,7 @@ export default {
             this.updateDisplay()
         },
         updateCalendar: function () {
+            this.calendar.clear()
             const keys = Object.keys(this.dates)
             const cals = []
             for (let filename of keys) {
