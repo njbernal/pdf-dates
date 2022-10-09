@@ -149,7 +149,7 @@ export default {
 
 #calendar {
     height: 400px;
-    width: 100vw;
+    width: 95vw;
     font-size: 0.6em;
 }
 

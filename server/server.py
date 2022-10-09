@@ -1,71 +1,41 @@
-import os
-import uuid
-import json
 from flask import Flask, request, make_response
 from flask_cors import CORS, cross_origin
 
+# PDF Date Extractor processing functionality
 from helpers.pdf import parsePDF
 
-
+# Create server and add cors support
 app = Flask(__name__)
 cors = CORS(app)
 
 
 @app.route('/', methods=['GET'])
 @cross_origin()
-def index():
-    return 'hello'
-
-
-@app.route('/api/user', methods=['GET'])
-@cross_origin()
-def user():
-    with open('./data/users.json', 'r') as userfile:
-        users = json.load(userfile)
-
-    unique_id = str(uuid.uuid4())
-    while (unique_id in users['users']):
-        unique_id = str(uuid.uuid4())
-
-    users['users'].append(unique_id)
-    os.mkdir(f'./data/{unique_id}')
-    with open('./data/users.json', 'w') as userfile:
-        json.dump(users, userfile)
-
-    return str(unique_id)
+def index() -> str:
+    """ 
+    Route for testing only. Says hello.
+    """
+    return 'Hello Harbour!'
 
 
 @ app.route('/api/upload', methods=['POST'])
 @ cross_origin()
-def upload():
-    uuid = request.form.get('user')
+def upload() -> object:
+    """ 
+    Primary file upload route. Checks the request
+    object for uploaded files, sends them to parsePDF for parsing
+    and returns the parsed result object.
+    Expects the files to be named 'source'.
+    """
     if len(request.files) == 0:
-        return make_response("Record not found", 400)
-    if not uuid:
-        return make_response("Invalid user ID", 404)
+        return make_response("No files provided.", 400)
 
     result = {}
     for file in request.files.getlist("source"):
-        file.save(f"./data/{uuid}/{file.filename}")
         result[file.filename] = parsePDF(file)
     return result
 
 
-@ app.route('/api/files', methods=['POST'])
-@ cross_origin()
-def get_files():
-    uuid = request.get_json()['user']
-    if not uuid:
-        return 'Error: Invalid user ID'
-
-    result = {}
-    for filename in os.listdir(f'./data/{uuid}'):
-        with open(f"./data/{uuid}/{filename}", 'rb') as file:
-            result[filename] = parsePDF(file)
-    return result
-
-
 if __name__ == '__main__':
-    # For testing purposes only
-    port = int(os.environ.get('PORT', 8888))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    """ For local testing. Use waitress-serve otherwise. """
+    app.run(host='0.0.0.0', port=5000, debug=True)

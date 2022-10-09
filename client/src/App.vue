@@ -4,13 +4,14 @@ import { ref, onMounted } from 'vue'
 
 import FileManager from "./components/FileManager.vue";
 import TheCalendar from "./components/TheCalendar.vue";
-import Popup from "./components/Popup.vue";
+import ThePopup from "./components/ThePopup.vue";
 
 const uuid = ref(localStorage.getItem('pdfCalendarId'))
 const dateData = ref({})
 const startDate = ref('2022-10-08')
 const calendarColors = ref([])
 const popupData = ref([])
+const popupStatus = ref(false)
 const files = ref({})
 const colors = ['#5B9DDA55', '#DAA55B55', '#9D5BFA55', '#7CDA5B55', '#5B60DA55', '#DA5B5B55', '#D0DA5B55', '#C15BDA55']
 
@@ -47,12 +48,14 @@ function openPopup(data) {
   reader.addEventListener('load', async () => {
     data.pdf = reader.result;
     popupData.value = data;
+    popupStatus.value = true;
   });
   reader.readAsDataURL(pdf)
 }
 
 function closePopup() {
-  popupData.value = { ...dateData.value, active: false }
+  popupData.value = {}
+  popupStatus.value = false;
 }
 
 function cacheFiles(data) {
@@ -69,7 +72,7 @@ function addDatesToCalendar(data) {
 </script>
   
 <template>
-  <Popup :data="popupData" @close-popup="closePopup" />
+  <ThePopup v-if="popupStatus" :data="popupData" @close-popup="closePopup" />
   <div class="col-left">
     <h1>PDF Date Extractor</h1>
     <div class="file-divider-container">
