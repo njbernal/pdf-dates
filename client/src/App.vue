@@ -5,9 +5,10 @@ import FileManager from "./components/FileManager.vue";
 import TheCalendar from "./components/TheCalendar.vue";
 import ThePopup from "./components/ThePopup.vue";
 import LoadingBoat from "./components/LoadingBoat.vue";
+import stringSort from "./assets/stringSort"
 
 const dateData = ref({})
-const startDate = ref('2022-10-08')
+const startDate = ref('')
 const calendarColors = ref([])
 const popupData = ref([])
 const popupStatus = ref(false)
@@ -55,6 +56,14 @@ function cacheFiles(data) {
 
 function addDatesToCalendar(data) {
   dateData.value = { ...dateData.value, ...data }
+  const keys = Object.keys(data).sort(stringSort)
+  for (let key of keys) {
+    if (data[key].results) { 
+      setCalendarDate(data[key].results[0].date)
+      break;
+    }
+  }
+
   setColors()
 }
 
@@ -83,7 +92,7 @@ function addDatesToCalendar(data) {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 0 50px 0;
+  margin: 0 0 10px 0;
 }
 
 .col-right {
@@ -128,15 +137,6 @@ h1 {
 
   .col-left {
     padding-right: 40px;
-  }
-
-  header {
-    line-height: 1.5;
-  }
-
-  .logo {
-    display: block;
-    margin: 0 auto 2rem;
   }
 
   .col-right {

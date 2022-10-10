@@ -6,6 +6,10 @@
 </template>
 
 <script setup>
+/* 
+    This component simply display a loading bar to inform the user the the server is
+    processing the uploaded PDFs.
+*/
 const props = defineProps({
     filenames: {
         type: Object,

@@ -21,9 +21,26 @@ a,
 }
 
 .button {
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 5px 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: var(--dark-blue);
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: var(--vt-c-white-soft);
+  transition: all 250ms ease;
+  max-width: 50%;
+  text-align: center;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+}
+
+.button:hover {
+  background-color: var(--bright-blue);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .toastui-calendar-see-more-container {
