@@ -4,7 +4,7 @@ body {
   background-color: var(--vt-c-white-soft);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 #app {
@@ -49,11 +49,29 @@ a,
   right: 50%;
 }
 
+.toastui-calendar-template-allday {
+  font-size: 0.7em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .toastui-calendar-weekday-event:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-
 }
 
+.toastui-calendar-weekday-event, 
+.toastui-calendar-weekend-event {
+  display: flex;
+  align-items: center;
+  margin: 2px 0 !important;
+  height: 20px !important;
+  font-size: 0.7em;
+  padding: 0;
+}
+
+.toastui-calendar-weekday-grid-more-events,
+.toastui-calendar-template-monthGridHeaderExceed {
+  top: 16px;
+}
 
 @media (hover: hover) {
   a:hover {
@@ -64,12 +82,31 @@ a,
 @media (min-width: 1250px) {
   body {
     display: flex;
-    place-items: center;
+    flex-direction: row;   
+    justify-content: center;
+    align-items: center;
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    display: flex;
   }
+
+  .toastui-calendar-template-allday {
+    font-size: 0.9em;
+  }
+
+  .toastui-calendar-weekday-event, 
+  .toastui-calendar-weekend-event {
+    margin: 5px 5px !important;
+    height: 20px !important;
+    font-size: 0.7em;
+    padding: 0;
+  }
+  
+.toastui-calendar-weekday-grid-more-events,
+.toastui-calendar-template-monthGridHeaderExceed {
+  top: 0px;
+
+}
+
 }

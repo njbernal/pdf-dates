@@ -153,7 +153,6 @@ export default {
     flex-direction: column;
     align-items: center;
     margin: 10px 0;
-    max-width: 800px;
 }
 
 
@@ -163,7 +162,7 @@ export default {
 }
 
 #calendar {
-    height: 350px;
+    height: 450px;
     width: 95vw;
     font-size: 0.6em;
 }
