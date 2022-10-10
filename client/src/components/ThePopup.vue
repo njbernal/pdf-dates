@@ -34,6 +34,13 @@ onMounted(() => {
     const popup = document.getElementById('popup')
     popup.classList.remove('hidden')
     popup.classList.add('popup')
+    window.onkeydown = function (e) {
+        if (e.keyCode === 27) {
+            if (popup?.classList?.contains('popup'))
+                closePopup()
+            window.onkeydown = function (e) { }
+        }
+    };
 })
 
 const activatePDF = () => {
