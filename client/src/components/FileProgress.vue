@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <span>Loading: </span>
-        <span v-for="(file, index) in filenames" :key="index">&nbsp;{{file.name}}&nbsp;</span>
+        <span v-for="(file, index) in props.filenames" :key="index">&nbsp;{{file.name}}&nbsp;</span>
     </div>
 </template>
 
@@ -16,7 +16,11 @@ const props = defineProps({
 
 <style scope>
 span {
+    display: inline-block;
     white-space: nowrap;
+    max-width: 400px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .wrapper {
@@ -35,9 +39,9 @@ span {
     align-items: center;
     text-overflow: ellipsis;
     /* const colors = ['#5B9DDA33', '#DAA55B33', '#9D5BFA33', '#7CDA5B33', '#5B60DA33', '#DA5B5B33', '#D0DA5B33', '#C15BDA33'] */
-    background: linear-gradient(45deg, #5B9DDA33, #DAA55B33, #9D5BFA33, #7CDA5B33, #5B60DA33, #DA5B5B33);
+    background: linear-gradient(45deg, #2F878933, #00aeff44, #2f5a8933, #2f5a8933, #2F878955, #00aeff44);
     background-size: 400% 400%;
-    -webkit-animation: loadingGradient 1s ease infinite;
+    -webkit-animation: loadingGradient 3s ease infinite;
     -moz-animation: loadingGradient 3s ease infinite;
     animation: loadingGradient 3s ease infinite;
 }

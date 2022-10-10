@@ -177,7 +177,10 @@ h3 {
 
 .button:hover {
     background-color: var(--bright-blue);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
+
+
 
 @media (min-width: 1024px) {
     h3 {
@@ -214,5 +217,6 @@ h3 {
         color: var(--vt-c-white-soft);
         transition: all 250ms ease;
     }
+
 }
 </style>

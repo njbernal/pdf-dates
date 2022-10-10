@@ -101,11 +101,12 @@ h3 {
 
 .inner-container {
     background-color: var(--vt-c-white-soft);
-    height: 125px;
+    height: 130px;
     width: 350px;
     max-width: 80%;
     padding: 10px;
     border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: all 350ms ease;
 }
 
@@ -159,6 +160,7 @@ h3 {
     height: 100%;
     width: 100%;
     padding: 5px;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
@@ -184,6 +186,7 @@ h3 {
 
 .button:hover {
     background-color: var(--bright-blue);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 

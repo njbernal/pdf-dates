@@ -40,7 +40,6 @@ export default {
         async onFilePicked(event) {
             const files = event.target.files;
             this.loadingNames = files
-            console.log(files)
             this.loading = true;
             const formData = new FormData()
             for (let file of files) {
@@ -154,6 +153,7 @@ h2 {
 
 .button:hover {
     background-color: var(--bright-blue);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* File List styles */
@@ -204,7 +204,8 @@ h2 {
 }
 
 .file-title:hover {
-    border: 1px solid var(--bright-blue);
+    border-bottom: 1px solid #2f5a8956;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .no-dates {

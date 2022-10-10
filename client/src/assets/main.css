@@ -26,6 +26,18 @@ a,
   -moz-user-select: none;
 }
 
+.toastui-calendar-see-more-container {
+  position: fixed;
+  left: 50%;
+  right: 50%;
+}
+
+.toastui-calendar-weekday-event:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);

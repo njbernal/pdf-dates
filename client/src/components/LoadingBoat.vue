@@ -65,13 +65,27 @@ function hide() {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #fefefe22;
+    background-color: #fefefe77;
     z-index: 5;
     color: var(--blue-purple);
     font-size: 0.9rem;
     backdrop-filter: saturate(150%) blur(3px);
     -webkit-backdrop-filter: saturate(200%) blur(5px);
-    transition: all 350ms ease;
+    transition: all 250ms ease;
+}
+
+.fullscreen>img {
+    -webkit-filter: grayscale(0%);
+    filter: grayscale(0%);
+    transition: all 250ms ease;
+    border-radius: 50px;
+}
+
+.fullscreen>img:hover {
+    -webkit-filter: saturate(150%);
+    filter: saturate(100%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transform: rotate(15deg);
 }
 
 
