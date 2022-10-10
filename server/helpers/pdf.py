@@ -8,6 +8,8 @@ from PyPDF2.errors import EmptyFileError
 formats = [
     '\d+[\/-]\d+[\/-]\d{2}(?:\d{2})?',
     '\d{1}(?:\d{1})\s[a-zA-Z]{3}(?:[a-zA-Z]*)\s\d{2}(?:\d{2})',
+    '\d{1}(?:\d{1})[\s\/]\d{1}(?:\d{1})[\s]\d{2}(?:\d{2})',
+    '[a-zA-Z]+\s\d{1}?[\d]?[\,]?\s?\d{2}(?:\d{2})?'
 ]
 
 class ReadError(Exception):

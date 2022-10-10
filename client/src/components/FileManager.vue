@@ -219,7 +219,7 @@ h2 {
 .dates-container {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 250ms ease-out;
+    transition: max-height 400ms ease-out;
 }
 
 .no-files {
@@ -241,7 +241,6 @@ h2 {
         font-size: 0.8rem;
         font-weight: bold;
         color: var(--vt-c-white-soft);
-        transition: all 250ms ease;
         min-width: 100px;
     }
 
