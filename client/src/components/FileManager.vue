@@ -1,11 +1,13 @@
 <script>
 import axios from 'axios'
 import DateContainer from "./DateContainer.vue";
+import FileProgress from "./FileProgress.vue";
 
 export default {
     name: "FileManager",
     components: {
         DateContainer,
+        FileProgress
     },
     props: {
         dates: {
@@ -22,7 +24,7 @@ export default {
         return {
             current_files: this.dates,
             uuid: localStorage.getItem('pdfCalendarId'),
-            visibility: ['fas', 'eye'],
+            loading: false
         }
     },
     methods: {
@@ -30,6 +32,7 @@ export default {
             this.$refs.fileInput.click()
         },
         async onFilePicked(event) {
+            this.loading = true;
             const files = event.target.files;
             const formData = new FormData()
             for (let file of files) {
@@ -42,8 +45,8 @@ export default {
                     "Content-Type": "multipart/form-data",
                 }
             });
-
             this.$emit('add-dates-to-calendar', result.data)
+            this.loading = false;
         },
         toggleVisible() {
             this.visibility[1] === 'eye' ? this.visibility[1] = 'eye-slash' : this.visibility[1] = 'eye';
@@ -93,6 +96,8 @@ export default {
                     </div>
                 </div>
             </div>
+            <FileProgress v-if="loading" />
+
         </div>
     </div>
 </template>
@@ -101,6 +106,7 @@ export default {
 .filemanager-container {
     min-width: 300px;
 }
+
 
 ul {
     list-style: none;
@@ -163,6 +169,19 @@ h2 {
 
 .file-container {
     cursor: pointer;
+    animation-name: fade;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0%;
+    }
+
+    to {
+        opacity: 100%;
+    }
 }
 
 .file-title {
@@ -172,6 +191,12 @@ h2 {
     padding: 5px;
     margin: 5px 0;
     cursor: pointer;
+    transition: all 300ms ease;
+    border: 1px solid var(--vt-c-white-soft)
+}
+
+.file-title:hover {
+    border: 1px solid var(--bright-blue);
 }
 
 .no-dates {

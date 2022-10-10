@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import FileManager from "./components/FileManager.vue";
 import TheCalendar from "./components/TheCalendar.vue";
 import ThePopup from "./components/ThePopup.vue";
+import LoadingBoat from "./components/LoadingBoat.vue";
 
 const dateData = ref({})
 const startDate = ref('2022-10-08')
@@ -11,8 +12,8 @@ const calendarColors = ref([])
 const popupData = ref([])
 const popupStatus = ref(false)
 const files = ref({})
+const startingStyle = ref('fullscreen')
 const colors = ['#5B9DDA33', '#DAA55B33', '#9D5BFA33', '#7CDA5B33', '#5B60DA33', '#DA5B5B33', '#D0DA5B33', '#C15BDA33']
-
 
 function setCalendarDate(date) {
   startDate.value = date
@@ -60,6 +61,7 @@ function addDatesToCalendar(data) {
 </script>
   
 <template>
+  <LoadingBoat :starting-style="startingStyle" />
   <ThePopup v-if="popupStatus" :data="popupData" @close-popup="closePopup" />
   <div class="col-left">
     <h1>PDF Date Extractor</h1>
