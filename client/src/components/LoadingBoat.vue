@@ -1,9 +1,6 @@
 <template>
     <div id="welcome" :class="style" @click="hide">
-        <img src="https://www.harbourshare.com/hs-fs/hubfs/ezgif.com-gif-maker.gif?width=100&amp;height=100&amp;name=ezgif.com-gif-maker.gif" alt="Harbour loading" width="100" height="100"
-            loading="lazy" style="width: 100px;"
-            srcset="https://www.harbourshare.com/hs-fs/hubfs/ezgif.com-gif-maker.gif?width=100&amp;height=100&amp;name=ezgif.com-gif-maker.gif 20w, https://www.harbourshare.com/hs-fs/hubfs/ezgif.com-gif-maker.gif?width=40&amp;height=40&amp;name=ezgif.com-gif-maker.gif 40w, https://www.harbourshare.com/hs-fs/hubfs/ezgif.com-gif-maker.gif?width=60&amp;height=60&amp;name=ezgif.com-gif-maker.gif 60w, https://www.harbourshare.com/hs-fs/hubfs/ezgif.com-gif-maker.gif?width=80&amp;height=80&amp;name=ezgif.com-gif-maker.gif 80w, https://www.harbourshare.com/hs-fs/hubfs/ezgif.com-gif-maker.gif?width=100&amp;height=100&amp;name=ezgif.com-gif-maker.gif 100w, https://www.harbourshare.com/hs-fs/hubfs/ezgif.com-gif-maker.gif?width=120&amp;height=120&amp;name=ezgif.com-gif-maker.gif 120w"
-            sizes="(max-width: 100px) 100vw, 100px" />
+        <img src="/images/harbour.gif" alt="Harbour loading" width="100" height="100" />
         <h2>Welcome, Harbour.</h2>
         <span>Click anywhere to begin.</span>
     </div>

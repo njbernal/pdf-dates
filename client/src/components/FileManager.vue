@@ -24,7 +24,13 @@ export default {
         return {
             current_files: this.dates,
             uuid: localStorage.getItem('pdfCalendarId'),
-            loading: false
+            loading: false,
+            loadingNames: []
+        }
+    },
+    computed: {
+        sendFilename() {
+            return this.loadingNames;
         }
     },
     methods: {
@@ -32,8 +38,10 @@ export default {
             this.$refs.fileInput.click()
         },
         async onFilePicked(event) {
-            this.loading = true;
             const files = event.target.files;
+            this.loadingNames = files
+            console.log(files)
+            this.loading = true;
             const formData = new FormData()
             for (let file of files) {
                 formData.append('source', file)
@@ -96,7 +104,7 @@ export default {
                     </div>
                 </div>
             </div>
-            <FileProgress v-if="loading" />
+            <FileProgress v-if="loading" :filenames="sendFilename" />
 
         </div>
     </div>
