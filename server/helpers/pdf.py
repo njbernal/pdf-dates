@@ -35,19 +35,13 @@ class DateExtractor:
             '\d+[\/-]\d+[\/-]\d{2}(?:\d{2})?',
             '\d{1}(?:\d{1})\s[a-zA-Z]{3}(?:[a-zA-Z]*)\s\d{2}(?:\d{2})',
             '\d{1}(?:\d{1})[\s\/]\d{1}(?:\d{1})[\s]\d{2}(?:\d{2})',
-            '[a-zA-Z]+\s\d{1}?[\d]?[\,]?\s?\d{2}(?:\d{2})?'
+            '[a-zA-Z]+\s\d{1}(?:\d{1})?[\s\,]?\s\d{2}(?:\d{2})?'
         ]
         self._filename = pdf_object.filename
         self._reader = self.init_reader(pdf_object)
         self._text_matches = self.extract_from_text()
         self._field_matches = self.extract_from_fields()
         self._results = self.generate_result()
-        self._formats = [
-            '\d+[\/-]\d+[\/-]\d{2}(?:\d{2})?',
-            '\d{1}(?:\d{1})\s[a-zA-Z]{3}(?:[a-zA-Z]*)\s\d{2}(?:\d{2})',
-            '\d{1}(?:\d{1})[\s\/]\d{1}(?:\d{1})[\s]\d{2}(?:\d{2})',
-            '[a-zA-Z]+\s\d{1}?[\d]?[\,]?\s?\d{2}(?:\d{2})?'
-        ]
 
     def init_reader(self, pdf_object: FileStorage) -> PdfReader:
         """
@@ -73,6 +67,8 @@ class DateExtractor:
         for page in self._reader.pages:
             pages.append(page.extractText())
         text = ''.join(pages)
+
+        print(text)
         return self.find_text_matches(text)
 
     def extract_from_fields(self) -> object:
@@ -126,6 +122,7 @@ class DateExtractor:
             regex_matches = re.finditer(format, contents)
             for obj in regex_matches:
                 # Attempt to parse match into a date for confirmation
+                print(obj)
                 try:
                     current = str(parse(obj.group()).date())
                 except:
@@ -157,6 +154,8 @@ class DateExtractor:
         fields = self._field_matches
         results = text['results'] + fields['results']
         results = sorted(results, key=lambda x: x['date'])
+        for result in results:
+            print(result)
 
         return {
             "count": text['count'] + fields['count'],
