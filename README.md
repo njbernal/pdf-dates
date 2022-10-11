@@ -11,7 +11,9 @@ A tool to extract dates from PDF files and visualize them on a calendar.
 
 ## Locally with Docker
 
-Ensure you have docker installed and simply run: `docker-compose up` to initialize both server and client. The client will launch on _port 80_ and the server on _port 5000_.
+- `npm run docker` will rebuild both server and client images without cache, and run them.
+- `docker compose up` will run both images.
+  The server will launch on _port 5000_ and client on _port 80_.
 
 <hr style=""/>
 
@@ -23,4 +25,7 @@ Live version: https://pdf-dates-client-eflldgeu2a-uw.a.run.app/
 
 # Usage
 
-Load PDF files using the button and review extracted dates in both list and calendar form.
+Load PDF files using the provided button. The app will extract dates from each PDF and then display them both as a list as well as in the calendar. The calendar will be automatically updated to the first date in the topmost file. Adding subsequent files will cause the calendar to jump to the first date in the new file.
+<br />
+<br />
+Clicking the event in the calendar will open a full screen popup with information about where in the PDF the date was extracted from, and provide the user with the option to look at the PDF directly.
