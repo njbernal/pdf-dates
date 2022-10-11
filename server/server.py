@@ -9,6 +9,11 @@ app = Flask(__name__)
 cors = CORS(app)
 
 
+"""
+Server Routes for PDF Extractor
+"""
+
+
 @app.route('/', methods=['GET'])
 @cross_origin()
 def index() -> str:
@@ -23,16 +28,15 @@ def index() -> str:
 def upload() -> object:
     """ 
     Primary file upload route. Checks the request
-    object for uploaded files, sends them to parsePDF for parsing
-    and returns the parsed result object.
-    Expects the files to be named 'source'.
+    object for uploaded files, created DateExtractor object and 
+    prepares response. Expects the files to be named 'source'.
+    :return: JSON response with date matches.
     """
     if len(request.files) == 0:
         return make_response("No files provided.", 400)
 
     result = {}
     for file in request.files.getlist("source"):
-        # result[file.filename] = parsePDF(file)
         extractor = DateExtractor(file)
         result[file.filename] = extractor.get_results()
     return result

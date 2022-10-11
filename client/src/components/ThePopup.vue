@@ -1,5 +1,5 @@
 <template>
-    <div id="popup" class="hidden">
+    <div id="popup" ref="popup" class="hidden">
         <div id="innerPopup" class="inner-container">
             <div class="close" @click="closePopup">
                 <font-awesome-icon class="fa-2x close-button" :icon="['fas','circle-xmark']" />
@@ -19,41 +19,47 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
+/*
+    Popup component for displaying details of an event in the calendar, and related PDF.
+*/
+
+const emit = defineEmits(['close-popup']);
 const props = defineProps({
     data: {
         type: Object,
         required: true
     }
 });
-const emit = defineEmits(['close-popup']);
-const pdfSwitch = ref(false);
+
+const pdfSwitch = ref(false)
+const popup = ref()
 
 onMounted(() => {
-    const popup = document.getElementById('popup')
-    popup.classList.remove('hidden')
-    popup.classList.add('popup')
+    // Setup the popup style and listen for 'esc' key.
+    popup.value.classList.remove('hidden')
+    popup.value.classList.add('popup')
     window.onkeydown = function (e) {
         if (e.keyCode === 27) {
-            if (popup?.classList?.contains('popup'))
+            if (popup.value?.classList?.contains('popup'))
                 closePopup()
-            window.onkeydown = function (e) { }
+            window.onkeydown = function () { }
         }
     };
 })
 
 const activatePDF = () => {
+    // Open related PDF inside popup.
     pdfSwitch.value = pdfSwitch.value ? false : true
-    const popup = document.getElementById('popup')
-    popup.classList.toggle('active')
+    popup.value.classList.toggle('active')
 }
 
 const closePopup = () => {
-    const popup = document.getElementById('popup')
-    popup.classList.remove('active')
-    popup.classList.add('hidden')
-    setTimeout(() => emit('close-popup'), "350");
+    // Close the popup.
+    popup.value.classList.remove('active')
+    popup.value.classList.add('hidden')
+    setTimeout(() => emit('close-popup'), "350")
 }
 </script>
     
@@ -66,8 +72,12 @@ h3 {
 }
 
 .blurb {
+    font-style: italic;
+    width: 100%;
     font-size: 0.9em;
+    overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipsis;
     margin: 5px 0 10px 0;
 }
 
@@ -108,7 +118,7 @@ h3 {
 
 .inner-container {
     background-color: var(--vt-c-white-soft);
-    height: 130px;
+    height: 150px;
     width: 350px;
     max-width: 80%;
     padding: 10px;
@@ -137,7 +147,6 @@ h3 {
     animation-name: fadein;
     animation-duration: 1s;
 }
-
 @keyframes fadein {
     from {
         opacity: 0;
@@ -158,8 +167,6 @@ h3 {
     border-radius: 10px;
 }
 
-
-
 .popup-info {
     display: flex;
     flex-direction: column;
@@ -167,35 +174,12 @@ h3 {
     height: 100%;
     width: 100%;
     padding: 5px;
-    text-overflow: ellipsis;
-    overflow: hidden;
 }
 
 .button-row {
     display: flex;
     justify-content: center;
 }
-
-.button {
-    display: inline-block;
-    padding: 10px 30px;
-    margin: 5px 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: var(--dark-blue);
-    font-size: 0.7rem;
-    font-weight: bold;
-    color: var(--vt-c-white-soft);
-    transition: all 250ms ease;
-    max-width: 50%;
-    text-align: center;
-}
-
-.button:hover {
-    background-color: var(--bright-blue);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
 
 .close {
     position: absolute;

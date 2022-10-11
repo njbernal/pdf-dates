@@ -1,11 +1,15 @@
 <template>
     <div class="wrapper">
         <span>Loading: </span>
-        <span v-for="(file, index) in props.filenames" :key="index">&nbsp;{{file.name}}&nbsp;</span>
+        <span v-for="(file, index) in props.filenames" :key="index" class="filenames">&nbsp;{{file.name}}&nbsp;</span>
     </div>
 </template>
 
 <script setup>
+/* 
+    This component simply display a loading bar to inform the user the the server is
+    processing the uploaded PDFs.
+*/
 const props = defineProps({
     filenames: {
         type: Object,
@@ -18,6 +22,9 @@ const props = defineProps({
 span {
     display: inline-block;
     white-space: nowrap;
+
+}
+.filenames {
     max-width: 400px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -27,7 +34,7 @@ span {
     max-width: 400px;
     color: var(--dark-blue);
     padding: 3px 3px;
-    text-align: center;
+    text-align: left;
     font-size: 0.7em;
     font-style: italic;
     letter-spacing: 1px;

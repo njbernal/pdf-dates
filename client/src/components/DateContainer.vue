@@ -1,4 +1,17 @@
+<template>
+    <div :id="data.date" :style="{ backgroundColor: bg }" class="date-container" @mouseover="changeBackground" @mouseleave="resetBackground" @click="dateClicked">
+        <div class="date-date">{{data.date}}</div>
+        <div class="date-blurb">{{data.blurb}}</div>
+    </div>
+    <div class="file-divider-container">
+        <div class="file-divider"></div>
+    </div>
+</template>
+
 <script>
+/*
+This component represents a single date item listed in the file manager
+*/
 export default {
     name: "DateContainer",
     props: {
@@ -31,23 +44,14 @@ export default {
     }
 }
 </script>
-        
-<template>
-    <div :id="data.date" :style="{ backgroundColor: bg }" class="date-container" @mouseover="changeBackground" @mouseleave="resetBackground" @click="dateClicked">
-        <div class="date-date">{{data.date}}</div>
-        <div class="date-blurb">{{data.blurb}}</div>
-    </div>
-    <div class="file-divider-container">
-        <div class="file-divider"></div>
-    </div>
-</template>
-        
+            
 <style scoped>
 .date-container {
     cursor: pointer;
     padding: 5px;
     max-width: 400px;
     display: flex;
+    color: var(--dark-blue);
     justify-content: flex-start;
 }
 
@@ -68,7 +72,7 @@ export default {
     white-space: nowrap;
     font-size: 0.9em;
     font-weight: 500;
-    color: var(--dark-blue)
+    color: var(--dark-blue);
 }
 
 .date-blurb {
@@ -79,6 +83,8 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: var(--dark-blue);
+
 }
 </style>
         

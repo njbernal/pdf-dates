@@ -4,13 +4,12 @@ body {
   background-color: var(--vt-c-white-soft);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 #app {
-  max-width: 1250px;
-  padding: 0;
   font-weight: normal;
+  height: 100%;
 }
 
 a,
@@ -21,10 +20,28 @@ a,
 }
 
 .button {
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 5px 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: var(--dark-blue);
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: var(--vt-c-white-soft);
+  transition: all 250ms ease;
+  max-width: 50%;
+  text-align: center;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
 }
+
+.button:hover {
+  background-color: var(--bright-blue);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
 
 .toastui-calendar-see-more-container {
   position: fixed;
@@ -32,9 +49,23 @@ a,
   right: 50%;
 }
 
+.toastui-calendar-template-allday {
+  font-size: 0.7em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .toastui-calendar-weekday-event:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
 
+.toastui-calendar-weekday-event, 
+.toastui-calendar-weekend-event {
+  display: flex;
+  align-items: center;
+  margin: 2px 0 !important;
+  height: 20px !important;
+  font-size: 0.7em;
+  padding: 0;
 }
 
 
@@ -44,15 +75,40 @@ a,
   }
 }
 
+@media (min-width: 1000px) {
+  .toastui-calendar-template-allday {
+    font-size: 0.9em;
+  }
+}
+
 @media (min-width: 1250px) {
   body {
     display: flex;
-    place-items: center;
+    flex-direction: row;   
+    justify-content: center;
+    align-items: center;
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    display: flex;
   }
+
+  .toastui-calendar-template-allday {
+    font-size: 0.9em;
+  }
+
+  .toastui-calendar-weekday-event, 
+  .toastui-calendar-weekend-event {
+    margin: 5px 5px !important;
+    height: 20px !important;
+    font-size: 0.7em;
+    padding: 0;
+  }
+  
+.toastui-calendar-weekday-grid-more-events,
+.toastui-calendar-template-monthGridHeaderExceed {
+  top: 0px;
+
+}
+
 }

@@ -9,6 +9,10 @@
 <script setup>
 import { computed } from 'vue'
 
+/*
+    Welcome page for Harbour!
+*/
+
 const props = defineProps({
     startingStyle: {
         type: String,
@@ -21,6 +25,7 @@ const style = computed(() => {
 });
 
 function hide() {
+    // Hide the intro page
     document.getElementById('welcome').classList.add('fade');
     setTimeout(() => {
         document.getElementById('welcome').classList.remove('fullscreen');
@@ -59,6 +64,8 @@ function hide() {
     position: fixed;
     top: 0px;
     left: 0px;
+    padding: 0;
+    margin: 0;
     width: 100%;
     height: 100%;
     display: flex;

@@ -2,6 +2,11 @@
 import Calendar from '@toast-ui/calendar'
 import '@toast-ui/calendar/dist/toastui-calendar.min.css'
 
+/*
+    Calendar component using TOAST UI's calendar.
+    Used Vue3 options interface here for learning and demo purposes.
+*/
+
 export default {
     props: {
         'dates': {
@@ -40,10 +45,12 @@ export default {
         }
     },
     mounted() {
+        // Created the calendar when this component loads.
         this.createCalendar()
     },
     methods: {
         createCalendar: function () {
+            // Initializes a new calendar.
             this.calendar = new Calendar('#calendar', {
                 defaultView: 'month',
                 useDetailPopup: false,
@@ -53,33 +60,36 @@ export default {
             });
             this.calendar.on({
                 'clickEvent': (e) => {
-                    const x = e.nativeEvent.clientX; //possibly pageX?>
-                    const y = e.nativeEvent.clientY;
-                    const filename = e.event.title;
-                    const blurb = e.event.body;
-                    const active = true;
-                    this.$emit('clickEvent', { x, y, filename, blurb, active });
+                    const x = e.nativeEvent.clientX
+                    const y = e.nativeEvent.clientY
+                    const filename = e.event.title
+                    const blurb = e.event.body
+                    const active = true
+                    this.$emit('clickEvent', { x, y, filename, blurb, active })
                 },
             });
-            this.updateCalendar();
+            this.updateCalendar()
             this.updateDisplay()
         },
         updateCalendar: function () {
+            // Updates the calendar with new events
             this.calendar.clear()
             const keys = Object.keys(this.dates)
             const cals = []
+
             for (let filename of keys) {
+                // Create the calendars
                 cals.push({
                     id: filename,
                     name: filename,
                     backgroundColor: this.colors[filename]
                 });
-
+                
                 const dates = this.dates[filename].results
                 const events = []
                 for (let index in dates) {
+                    // Add events to calendar
                     if (!this.initialDate) {
-                        this.calendar.setDate(dates[index].date)
                         this.initialDate = true
                         this.updateDisplay()
                     }
@@ -94,17 +104,21 @@ export default {
                     }
                     events.push(obj)
                 }
+                // Add the events
                 this.calendar.createEvents(events)
             }
+            // Add the calendars
             this.calendar.setCalendars(cals)
         },
         updateDisplay: function () {
+            // Show the Month and Year the calendar is currently set to.
             const calDate = this.calendar.getDate()
             this.displayMonth = this.months[calDate.getMonth()]
             this.displayYear = calDate.getFullYear()
             this.$emit('change-start-date', { calDate })
         },
         calendarControl: function (e) {
+            // Calendar control buttons.
             if (e.target.id === 'btn-today') {
                 this.calendar.today()
             } else if (e.target.id === 'btn-prev') {
@@ -139,7 +153,6 @@ export default {
     flex-direction: column;
     align-items: center;
     margin: 10px 0;
-    max-width: 800px;
 }
 
 
@@ -149,9 +162,10 @@ export default {
 }
 
 #calendar {
-    height: 400px;
+    height: 450px;
     width: 95vw;
     font-size: 0.6em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 h3 {
@@ -163,24 +177,8 @@ h3 {
 
 
 .button {
-    display: inline-block;
     padding: 3px 20px;
-    margin: 5px 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: var(--dark-blue);
-    font-size: 0.7rem;
-    font-weight: bold;
-    color: var(--vt-c-white-soft);
-    transition: all 250ms ease;
 }
-
-.button:hover {
-    background-color: var(--bright-blue);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
-
 
 @media (min-width: 1024px) {
     h3 {
@@ -206,16 +204,7 @@ h3 {
     }
 
     .button {
-        display: inline-block;
         padding: 3px 20px;
-        margin: 5px 5px;
-        cursor: pointer;
-        border-radius: 5px;
-        background-color: var(--dark-blue);
-        font-size: 0.8rem;
-        font-weight: bold;
-        color: var(--vt-c-white-soft);
-        transition: all 250ms ease;
     }
 
 }
