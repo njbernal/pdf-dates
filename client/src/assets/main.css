@@ -91,18 +91,6 @@ a,
 }
 
 @media (min-width: 900px) {
-  .toastui-calendar-weekday-grid-more-events,
-  .toastui-calendar-template-monthGridHeaderExceed {
-    top: -3px;
-    left: 0px;
-    font-size: 0.9em;
-  }
-  .toastui-calendar-template-allday {
-    font-size: 0.9em;
-  }
-}
-
-@media (min-width: 1250px) {
   body {
     display: flex;
     flex-direction: row;   
