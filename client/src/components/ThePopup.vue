@@ -61,6 +61,7 @@ const closePopup = () => {
     popup.value.classList.add('hidden')
     setTimeout(() => emit('close-popup'), "350")
 }
+
 </script>
     
 

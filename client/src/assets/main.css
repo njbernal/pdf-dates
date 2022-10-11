@@ -42,7 +42,6 @@ a,
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-
 .toastui-calendar-see-more-container {
   position: fixed;
   left: 50%;
@@ -68,6 +67,10 @@ a,
   padding: 0;
 }
 
+.toastui-calendar-weekday-grid-more-events,
+.toastui-calendar-template-monthGridHeaderExceed {
+  top: 16px;
+}
 
 @media (hover: hover) {
   a:hover {

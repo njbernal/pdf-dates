@@ -21,6 +21,7 @@ const props = defineProps({
 });
 
 const style = computed(() => {
+    console.log(props.startingStyle)
     return props.startingStyle
 });
 
