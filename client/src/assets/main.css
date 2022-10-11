@@ -4,7 +4,7 @@ body {
   background-color: var(--vt-c-white-soft);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 #app {
@@ -44,8 +44,10 @@ a,
 
 .toastui-calendar-see-more-container {
   position: fixed;
-  left: 50%;
-  right: 50%;
+  width: 300px;
+  height: 500px;
+  left: (50% - 150px);
+  top: (50% - 250px)
 }
 
 .toastui-calendar-template-allday {
@@ -69,7 +71,7 @@ a,
 
 .toastui-calendar-weekday-grid-more-events,
 .toastui-calendar-template-monthGridHeaderExceed {
-  top: 16px;
+  top: 17px;
 }
 
 @media (hover: hover) {
@@ -78,7 +80,11 @@ a,
   }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 900px) {
+  .toastui-calendar-weekday-grid-more-events,
+  .toastui-calendar-template-monthGridHeaderExceed {
+    top: 0px;
+  }
   .toastui-calendar-template-allday {
     font-size: 0.9em;
   }

@@ -152,7 +152,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px 0;
+    margin: 20px 0 0 0;
 }
 
 
