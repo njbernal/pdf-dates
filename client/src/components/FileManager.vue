@@ -17,7 +17,7 @@
             <div v-if="!getFilenames.length" class="no-files">
                 No files available yet. Try adding some with the button above.
             </div>
-            <div v-if="getFilenames.length" class="row">
+            <div v-if="getFilenames.length" class="row title-row">
                 <div>File Name</div>
                 <div>Date Matches</div>
             </div>
@@ -46,9 +46,12 @@
                             v-for="(item, item_index) in dates[filename].results" 
                             :key="item_index" 
                             :data="item" 
+                            :index="item_index"
+                            :filename="filename"
                             :color="colors[filename]"
-                            @set-calendar-date="emit('set-calendar-date', item.date)" 
+                            @set-calendar-date="emit('set-calendar-date', item.date)"
                             @close-collapse="closeCollapsible" 
+                            @remove-date="removeDate"
                         />
                     </div>
                     <div v-else :id="filename" ref="drawers" class="dates-container">
@@ -57,7 +60,10 @@
                 </div>
             </div>
             <FileProgress v-if="loading" :filenames="sendFilename" />
-            <div v-if="loadingError" class="error">An error has occured. Please ensure the server is running and try again.</div>
+            <div v-if="loadingError" class="error">
+                An error has occured. 
+                Please ensure the server is running and try again.
+            </div>
         </div>
     </div>
 </template>
@@ -71,10 +77,16 @@ import FileProgress from "./FileProgress.vue"
 import stringSort from "../assets/stringSort"
 
 /* 
-    The FileManager component allows for PDF uploading, as well as file and date listing.
-    Uses DateContainer for listing dates.
+    The FileManager component allows for PDF uploading, 
+    as well as file and date listing. Uses DateContainer for listing dates.
 */
-const emit = defineEmits(['cache-files', 'add-dates-to-calendar', 'set-calendar-date'])
+const emit = defineEmits([
+    'cache-files', 
+    'add-dates-to-calendar', 
+    'set-calendar-date', 
+    'remove-date'
+]);
+
 const props = defineProps({
     dates: {
         type: Object,
@@ -140,7 +152,8 @@ async function handleFileUpload(event) {
         setTimeout(() => {
             loadingError.value = false
         }, 5000);
-        console.error('A server error has occured. Ensure the server is running and try again.')
+        const msg = 'Server Error: Ensure the server is running and try again.'
+        console.error(msg)
         return
     }
 
@@ -170,6 +183,9 @@ function closeCollapsible() {
     }
 }
 
+function removeDate(data) {
+    emit('remove-date', data)
+}
 
 </script>
 
@@ -246,6 +262,7 @@ h2 {
     transition: all 300ms ease;
     border: 1px solid var(--vt-c-white-soft);
     color: var(--dark-blue);
+    border: 1px solid var(--bright-blue-faded);
 }
 .row {
     display: flex;
@@ -258,6 +275,9 @@ h2 {
 
 .row > div {
     border-bottom: 1px solid var(--dark-blue);
+}
+.title-row {
+    color: var(--dark-blue);
 }
 
 .file-title:hover {

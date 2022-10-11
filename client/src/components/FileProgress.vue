@@ -1,7 +1,9 @@
 <template>
     <div class="wrapper">
         <span>Loading: </span>
-        <span v-for="(file, index) in props.filenames" :key="index" class="filenames">&nbsp;{{file.name}}&nbsp;</span>
+        <span class="filename-container">
+            <span v-for="(file, index) in props.filenames" :key="index" class="filenames">&nbsp;{{file.name}}&nbsp;</span>
+        </span>
     </div>
 </template>
 
@@ -24,10 +26,14 @@ span {
     white-space: nowrap;
 
 }
-.filenames {
-    max-width: 400px;
+.filename-container {
+    max-width: 100%;
+    padding: 5px;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+.filenames {
+
 }
 
 .wrapper {

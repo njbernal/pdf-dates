@@ -2,7 +2,10 @@
     <div id="popup" ref="popup" class="hidden">
         <div id="innerPopup" class="inner-container">
             <div class="close" @click="closePopup">
-                <font-awesome-icon class="fa-2x close-button" :icon="['fas','circle-xmark']" />
+                <font-awesome-icon 
+                    class="fa-2x close-button" 
+                    :icon="['fas','circle-xmark']" 
+                />
             </div>
             <div class="popup-info">
                 <h3>{{props.data.filename}}</h3>
@@ -11,7 +14,12 @@
                     <iframe class="pdf-container" :src="props.data.pdf"></iframe>
                 </div>
                 <div class="button-row">
-                    <div class="button" @click="activatePDF">{{pdfSwitch ? 'Hide PDF' : 'View PDF'}}</div>
+                    <div 
+                        class="button" 
+                        @click="activatePDF"
+                    >
+                        {{pdfSwitch ? 'Hide PDF' : 'View PDF'}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -22,7 +30,8 @@
 import { ref, onMounted } from 'vue'
 
 /*
-    Popup component for displaying details of an event in the calendar, and related PDF.
+    Popup component for displaying details of an event 
+    in the calendar, and related PDF.
 */
 
 const emit = defineEmits(['close-popup']);

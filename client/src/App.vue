@@ -36,7 +36,10 @@ function setColors() {
 }
 
 function generateColor() {  
-  /* Generates random hex color, and if its not already in the color ref, add it */
+  /* 
+    Generates random hex color, 
+    and if its not already in the color ref, add it 
+  */
   let color;
   do color = "#" + Math.floor(Math.random()*16777215).toString(16) + "44";
   while (colors.value.includes(color)) 
@@ -80,11 +83,22 @@ function addDatesToCalendar(data) {
   const keys = Object.keys(data).sort(stringSort)
   for (let key of keys) {
     if (data[key].results) { 
-      setCalendarDate(data[key].results[0]?.date ? data[key].results[0].date : '')
+      // Set the first date we find or none if there isn't any.
+      setCalendarDate(
+        data[key].results[0]?.date ? data[key].results[0].date : ''
+      );
       break;
     }
   }
   setColors()
+}
+
+function removeDate(data) {
+  /* Remove unwanted date */
+  const new_dates = {...dateData.value}
+  new_dates[data.filename].results.splice(data.index, 1)
+  new_dates[data.filename].count--
+  dateData.value = new_dates
 }
 </script>
   
@@ -96,11 +110,24 @@ function addDatesToCalendar(data) {
     <div class="file-divider-container">
       <div class="file-divider"></div>
     </div>
-    <FileManager :dates="dateData" :colors="calendarColors" @add-dates-to-calendar="addDatesToCalendar" @set-calendar-date="setCalendarDate" @cache-files="cacheFiles" />
+    <FileManager 
+      :dates="dateData" 
+      :colors="calendarColors" 
+      @add-dates-to-calendar="addDatesToCalendar"
+      @set-calendar-date="setCalendarDate"
+      @cache-files="cacheFiles" 
+      @remove-date="removeDate"
+    />
   </div>
   <div class="col-right">
     <div class="col-right-wrapper">
-      <TheCalendar :dates="dateData" :colors="calendarColors" :start-date="startDate" @click-event="openPopup" @change-start-date="clearDate" />
+      <TheCalendar 
+        :dates="dateData" 
+        :colors="calendarColors" 
+        :start-date="startDate" 
+        @click-event="openPopup" 
+        @change-start-date="clearDate" 
+      />
     </div>
   </div>
 </template>

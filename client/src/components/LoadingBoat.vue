@@ -1,6 +1,11 @@
 <template>
     <div id="welcome" :class="style" @click="hide">
-        <img src="/images/harbour.gif" alt="Harbour loading" width="100" height="100" />
+        <img 
+            src="/images/harbour.gif" 
+            alt="Harbour loading" 
+            width="100" 
+            height="100" 
+        />
         <h2>Welcome, Harbour.</h2>
         <span>Click anywhere to begin.</span>
     </div>

@@ -1,7 +1,23 @@
 <template>
-    <div :id="data.date" :style="{ backgroundColor: bg }" class="date-container" @mouseover="changeBackground" @mouseleave="resetBackground" @click="dateClicked">
+    <div 
+        :id="data.date" 
+        :style="{ backgroundColor: bg }" 
+        class="date-container" 
+        @mouseover="changeBackground" 
+        @mouseleave="resetBackground" 
+        @click="dateClicked"
+    >
         <div class="date-date">{{data.date}}</div>
         <div class="date-blurb">{{data.blurb}}</div>
+        <div class="close" @click="closePopup">
+            <font-awesome-icon 
+                class="fa-1x close-button" 
+                :icon="['fas','circle-xmark']" 
+                :index="index" 
+                :filename="filename" 
+                @click="removeDate"
+            />
+        </div>
     </div>
     <div class="file-divider-container">
         <div class="file-divider"></div>
@@ -19,12 +35,20 @@ export default {
             type: Object,
             required: true
         },
+        filename: {
+            type: String,
+            required: true
+        },
         color: {
             type: String,
             required: true
+        },
+        index: {
+            type: Number,
+            required: true
         }
     },
-    emits: ['set-calendar-date', 'close-collapse'],
+    emits: ['set-calendar-date', 'close-collapse', 'remove-date'],
     data() {
         return {
             bg: ''
@@ -40,6 +64,12 @@ export default {
         },
         resetBackground() {
             this.bg = ''
+        },
+        removeDate() {
+            this.$emit('remove-date', {
+                index: this.index, 
+                filename:this.filename
+            });
         }
     }
 }
@@ -49,10 +79,11 @@ export default {
 .date-container {
     cursor: pointer;
     padding: 5px;
-    max-width: 400px;
+    width: 100%;
+    max-width: 100%;
     display: flex;
     color: var(--dark-blue);
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
 .file-divider-container {
@@ -72,19 +103,28 @@ export default {
     white-space: nowrap;
     font-size: 0.7em;
     font-weight: 500;
+    max-width: 10%;
     color: var(--dark-blue);
 }
 
-.date-blurb {
-    min-width: 300px;
-    width: 300px;
+.date-blurb {    
+    max-width: 80%;
     font-size: 0.7rem;
     font-style: italic;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     color: var(--dark-blue);
-
+}
+.close {
+    max-width: 10%;
+    z-index: 2;
+}
+.close-button {
+    transition: all 250ms ease;
+}
+.close-button:hover {
+    color: var(--bright-blue);
 }
 </style>
         

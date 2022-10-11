@@ -22,7 +22,7 @@ Clicking the event in the calendar will open a full screen popup with informatio
 
 - `npm run docker` will rebuild both server and client images without cache, and run them.
 - `docker compose up` will run both images.
-  The server will launch on _port 5000_ and client on _port 80_. Running these commands will run the Vue application in dev mode. If you would like to run it in production mode, build the image from the ./client/Dockerfile.prod file instead.
+  The server will launch on _port 5000_ and client on _port 80_. These commands will default to run the Vue application in dev mode. If you would like to run it in production mode (which uses the remote GCP server), build the image from the ./client/Dockerfile.prod file instead.
 
 ## Live version on GCP
 
