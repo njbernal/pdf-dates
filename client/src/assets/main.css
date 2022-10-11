@@ -97,6 +97,7 @@ a,
     left: 0px;
     font-size: 0.9em;
   }
+  
   .toastui-calendar-weekday-event, 
   .toastui-calendar-weekend-event {
     margin: 5px 5px !important;
@@ -104,6 +105,7 @@ a,
     font-size: 0.7em;
     padding: 0;
   }
+
   .toastui-calendar-template-allday {
     font-size: 0.9em;
   }

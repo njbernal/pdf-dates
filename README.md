@@ -7,25 +7,23 @@ A tool to extract dates from PDF files and visualize them on a calendar.
 
 <br />
 
-# Testing Options
-
-## Locally with Docker
-
-- `npm run docker` will rebuild both server and client images without cache, and run them.
-- `docker compose up` will run both images.
-  The server will launch on _port 5000_ and client on _port 80_.
-
-<hr style=""/>
-
-## Live version on GCP
-
-Live version: https://pdf-dates-client-eflldgeu2a-uw.a.run.app/
-
-<br />
-
 # Usage
 
 Load PDF files using the provided button. The app will extract dates from each PDF and then display them both as a list as well as in the calendar. The calendar will be automatically updated to the first date in the topmost file. Adding subsequent files will cause the calendar to jump to the first date in the new file.
 <br />
 <br />
 Clicking the event in the calendar will open a full screen popup with information about where in the PDF the date was extracted from, and provide the user with the option to look at the PDF directly.
+
+<br />
+
+# Testing Options
+
+## Locally with Docker
+
+- `npm run docker` will rebuild both server and client images without cache, and run them.
+- `docker compose up` will run both images.
+  The server will launch on _port 5000_ and client on _port 80_. Running these commands will run the Vue application in dev mode. If you would like to run it in production mode, build the image from the ./client/Dockerfile.prod file instead.
+
+## Live version on GCP
+
+Live version: https://pdf-dates-client-eflldgeu2a-uw.a.run.app/
