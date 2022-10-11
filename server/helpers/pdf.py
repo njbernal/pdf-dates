@@ -67,8 +67,6 @@ class DateExtractor:
         for page in self._reader.pages:
             pages.append(page.extractText())
         text = ''.join(pages)
-
-        print(text)
         return self.find_text_matches(text)
 
     def extract_from_fields(self) -> object:
@@ -122,7 +120,6 @@ class DateExtractor:
             regex_matches = re.finditer(format, contents)
             for obj in regex_matches:
                 # Attempt to parse match into a date for confirmation
-                print(obj)
                 try:
                     current = str(parse(obj.group()).date())
                 except:
@@ -154,8 +151,6 @@ class DateExtractor:
         fields = self._field_matches
         results = text['results'] + fields['results']
         results = sorted(results, key=lambda x: x['date'])
-        for result in results:
-            print(result)
 
         return {
             "count": text['count'] + fields['count'],
