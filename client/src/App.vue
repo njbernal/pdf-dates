@@ -14,25 +14,40 @@ const popupData = ref([])
 const popupStatus = ref(false)
 const files = ref({})
 const startingStyle = ref('fullscreen')
-const colors = ['#5B9DDA33', '#DAA55B33', '#9D5BFA33', '#7CDA5B33', '#5B60DA33', '#DA5B5B33', '#D0DA5B33', '#C15BDA33']
+const colors = ref([])
 
 function setCalendarDate(date) {
+  /* Set the focus date on the calendar */
   startDate.value = date
 }
-function updateDate() {
+function clearDate() {
+  /* Clear the start date */
   startDate.value = '';
 }
 
 function setColors() {
+  /* Assign colors to each calendar */
   const calColors = {}
   const keys = Object.keys(dateData.value)
   for (let index in keys) {
-    calColors[keys[index]] = colors[index]
+    calColors[keys[index]] = generateColor()
   }
   calendarColors.value = calColors
 }
 
+function generateColor() {  
+  /* Generates random hex color, and if its not already in the color ref, add it */
+  let color;
+  do color = "#" + Math.floor(Math.random()*16777215).toString(16) + "44";
+  while (colors.value.includes(color)) 
+  return color;
+}
+
 function openPopup(data) {
+  /* 
+    Open the details popup. Pre-loads the linked
+    PDF for display using FileReader()
+  */
   const pdf = files.value[data.filename];
   const reader = new FileReader();
   reader.addEventListener('load', async () => {
@@ -44,29 +59,33 @@ function openPopup(data) {
 }
 
 function closePopup() {
+  /* Close the popup dialog */
   popupData.value = {}
   popupStatus.value = false;
 }
 
 function cacheFiles(data) {
+  /* Keep a list of current files */
   for (let obj of data) {
     files.value[obj.name] = obj;
   }
 }
 
 function addDatesToCalendar(data) {
+  /* 
+    Merge current dates with new data and 
+    add it to the calendar 
+  */
   dateData.value = { ...dateData.value, ...data }
   const keys = Object.keys(data).sort(stringSort)
   for (let key of keys) {
     if (data[key].results) { 
-      setCalendarDate(data[key].results[0].date)
+      setCalendarDate(data[key].results[0]?.date ? data[key].results[0].date : '')
       break;
     }
   }
-
   setColors()
 }
-
 </script>
   
 <template>
@@ -81,7 +100,7 @@ function addDatesToCalendar(data) {
   </div>
   <div class="col-right">
     <div class="col-right-wrapper">
-      <TheCalendar :dates="dateData" :colors="calendarColors" :start-date="startDate" @click-event="openPopup" @change-start-date="updateDate" />
+      <TheCalendar :dates="dateData" :colors="calendarColors" :start-date="startDate" @click-event="openPopup" @change-start-date="clearDate" />
     </div>
   </div>
 </template>

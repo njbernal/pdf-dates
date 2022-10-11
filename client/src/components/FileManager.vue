@@ -17,6 +17,10 @@
             <div v-if="!getFilenames.length" class="no-files">
                 No files available yet. Try adding some with the button above.
             </div>
+            <div v-if="getFilenames.length" class="row">
+                <div>File Name</div>
+                <div>Date Matches</div>
+            </div>
             <div 
                 v-for="(filename, index) in getFilenames" 
                 :key="index" 
@@ -29,10 +33,11 @@
                     @click="openCollapsible"
                 >
                     <h3>{{filename}}</h3>
+                    <div class="count">{{dates[filename].count}}</div>
                 </div>
                 <div class="file-data">
                     <div 
-                        v-if="dates[filename].results.length > 0" 
+                        v-if="dates[filename].results?.length > 0" 
                         :id="filename" 
                         ref="drawers" 
                         class="dates-container"
@@ -46,7 +51,7 @@
                             @close-collapse="closeCollapsible" 
                         />
                     </div>
-                    <div v-else :id="filename" class="dates-container">
+                    <div v-else :id="filename" ref="drawers" class="dates-container">
                         <div class="no-dates">No dates to display.</div>
                     </div>
                 </div>
@@ -172,6 +177,7 @@ function closeCollapsible() {
 .filemanager-container {
     min-width: 300px;
     max-width: 95%;
+    white-space: nowrap;
     overflow: hidden;
 }
 
@@ -179,7 +185,7 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
 li {
@@ -231,7 +237,7 @@ h2 {
 }
 
 .file-title {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     display: flex;
     justify-content: space-between;
     padding: 5px;
@@ -241,16 +247,34 @@ h2 {
     border: 1px solid var(--vt-c-white-soft);
     color: var(--dark-blue);
 }
+.row {
+    display: flex;
+    font-size: 0.6rem;
+    font-weight: 600;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 5px 0 5px;
+}
+
+.row > div {
+    border-bottom: 1px solid var(--dark-blue);
+}
 
 .file-title:hover {
     border-bottom: 1px solid #2f5a8956;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+.file-title > h3 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .no-dates {
     padding: 0 0 0 5px;
     margin: 0 10px 0 0;
-    font-size: 0.9em;
+    font-size: 0.7em;
+    font-style: italic;
     font-weight: 500;
     color: var(--dark-blue)
 }
@@ -275,6 +299,17 @@ h2 {
     padding: 5px;
     text-align: center;
     transition: all 250ms ease;
+}
+
+.count {
+    font-size: 0.6rem;
+    background-color: var(--bright-blue-faded);
+    color: var(--dark-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 0px 20px 0 20px;
 }
 
 @media (min-width: 1024px) {

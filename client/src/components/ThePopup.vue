@@ -69,6 +69,10 @@ const closePopup = () => {
 h3 {
     font-size: 0.9rem;
     font-weight: 600;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: var(--magenta);
 }
 

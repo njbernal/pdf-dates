@@ -70,7 +70,7 @@ export default {
 .date-date {
     margin: 0 10px 0 0;
     white-space: nowrap;
-    font-size: 0.9em;
+    font-size: 0.7em;
     font-weight: 500;
     color: var(--dark-blue);
 }

@@ -35,7 +35,8 @@ class DateExtractor:
             '\d+[\/-]\d+[\/-]\d{2}(?:\d{2})?',
             '\d{1}(?:\d{1})\s[a-zA-Z]{3}(?:[a-zA-Z]*)\s\d{2}(?:\d{2})',
             '\d{1}(?:\d{1})[\s\/]\d{1}(?:\d{1})[\s]\d{2}(?:\d{2})',
-            '[a-zA-Z]+\s\d{1}(?:\d{1})?[\s\,]?\s\d{2}(?:\d{2})?'
+            '[a-zA-Z]+\s\d{1}(?:\d{1})?[\s\,]?\s\d{2}(?:\d{2})?',
+            '\d{1}(?:\d{1})[thsnd]*\sday\sof\s[a-zA-Z]{3}(?:[a-zA-Z]*)\,?\s\d{2}(?:\d{2})'
         ]
         self._filename = pdf_object.filename
         self._reader = self.init_reader(pdf_object)
