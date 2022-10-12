@@ -78,6 +78,11 @@ class DateExtractor:
         for further processing.
         :return: matches in JSON object 
         """
+        if self._reader.is_encrypted:
+            # If the PDF is encrypted it raises errors. For now
+            # Let's ignore the fields if they are encrypted.
+            return {"count": 0, "results": []}
+
         non_empty_fields = []
         try:
             fields = self._reader.get_fields()
@@ -96,6 +101,7 @@ class DateExtractor:
         Finds date matches in PDF fields
         :return: matches in JSON format
         """
+
         matches = []
         for field in fields:
             for format in self._formats:
