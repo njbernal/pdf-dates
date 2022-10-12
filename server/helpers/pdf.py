@@ -17,8 +17,9 @@ class ReadError(Exception):
     a PDF file fails.
     """
 
-    def __init__(self):
+    def __init__(self, filename=""):
         self.message = "Unable to read PDF."
+        self.filename = filename
 
 
 class DateExtractor:
@@ -38,21 +39,22 @@ class DateExtractor:
             '[a-zA-Z]+\s\d{1}(?:\d{1})?[\s\,]?\s\d{2}(?:\d{2})?',
             '\d{1}(?:\d{1})[thsnd]*\sday\sof\s[a-zA-Z]{3}(?:[a-zA-Z]*)\,?\s\d{2}(?:\d{2})'
         ]
+        self._pdf_object = pdf_object
         self._filename = pdf_object.filename
-        self._reader = self.init_reader(pdf_object)
+        self._reader = self.init_reader()
         self._text_matches = self.extract_from_text()
         self._field_matches = self.extract_from_fields()
         self._results = self.generate_result()
 
-    def init_reader(self, pdf_object: FileStorage) -> PdfReader:
+    def init_reader(self) -> PdfReader:
         """
         Initialize PDF reader from PyPDF2 and pass it the current file.
         :return: The PdfReader object
         """
         try:
-            reader = PdfReader(pdf_object)
+            reader = PdfReader(self._pdf_object)
         except EmptyFileError:
-            raise ReadError(pdf_object.filename)
+            raise ReadError(self._filename)
         return reader
 
     def get_results(self) -> object:
@@ -77,7 +79,10 @@ class DateExtractor:
         :return: matches in JSON object 
         """
         non_empty_fields = []
-        fields = self._reader.get_fields()
+        try:
+            fields = self._reader.get_fields()
+        except:
+            raise ReadError(self._filename)
         if not fields:
             return {"count": 0, "results": []}
         for key in fields:
